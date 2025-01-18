@@ -19,7 +19,6 @@ class Category(BaseModel):
 class Product(BaseModel):
     name = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(upload_to='product_image/')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
 
@@ -33,10 +32,21 @@ class Order(BaseModel):
         ('APPROVED', 'Approved'),
         ('SOLD', 'Sold'),
     ]
+
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     table_number = models.CharField(max_length=20)
     status = models.CharField(choices=STATUS_CHOICES, max_length=20, default='MODERATION')
-    product = models.ManyToManyField(Product, related_name='orders')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='orders')
+    quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return f"Table {self.table_number} - {self.status}"
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product.name}"

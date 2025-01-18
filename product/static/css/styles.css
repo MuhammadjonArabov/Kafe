@@ -1,0 +1,13 @@
+body {
+    padding-top: 56px;
+}
+.navbar {
+    background-color: #e7f1ff;
+}
+.navbar-nav {
+    margin-left: auto;
+    margin-right: auto;
+}
+.nav-link {
+    text-align: center;
+}
