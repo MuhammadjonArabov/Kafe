@@ -61,7 +61,7 @@
                         <a class="nav-link {% if request.path == '/orders/' %}active{% endif %}" href="{% url 'orders_list' %}">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Total Amount</a>
+                        <a class="nav-link {% if request.path == '/total_amount/' %}active{% endif %}" href="{% url 'total_amount' %}">Total Amount</a>
                     </li>
                 </ul>
             </div>

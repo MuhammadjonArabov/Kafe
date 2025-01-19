@@ -51,5 +51,19 @@ def delete_order(request, order_id):
     return redirect("orders_list")
 
 
-def index(request):
-    return render(request, "base.html")
+def total_amount(request):
+    moderation_count = Order.objects.filter(status='MODERATION').count()
+    approved_count = Order.objects.filter(status='APPROVED').count()
+    sold_orders = Order.objects.filter(status='SOLD')
+
+    sold_count = sold_orders.count()
+    total_revenue = sum(order.total_amount for order in sold_orders)
+
+    context = {
+        "moderation_count": moderation_count,
+        "approved_count": approved_count,
+        "sold_count": sold_count,
+        "total_revenue": total_revenue,
+    }
+
+    return render(request, "total_amount.html", context)

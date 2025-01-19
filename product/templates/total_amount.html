@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Statistika</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Moderation</div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ moderation_count }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Approved</div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ approved_count }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Sold</div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ sold_count }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card text-white bg-dark">
+                <div class="card-header">Umumiy Daromad</div>
+                <div class="card-body">
+                    <h3 class="card-title">{{ total_revenue }} so‘m</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
