@@ -6,7 +6,7 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        abstract = True  # Bu model faqat meros olish uchun
+        abstract = True
 
 
 class Category(BaseModel):
@@ -35,7 +35,7 @@ class Order(BaseModel):
 
     table_number = models.CharField(max_length=20)
     status = models.CharField(choices=STATUS_CHOICES, max_length=20, default='MODERATION')
-    product = models.ManyToManyField(related_name='orders')
+    product = models.ManyToManyField(Product, related_name='orders')
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):

@@ -3,16 +3,15 @@ from .models import Order, Product, Category
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'table_number', 'status', 'product', 'total_amount')
+    list_display = ('id', 'table_number', 'status', 'get_products', 'total_amount')
     list_filter = ('status',)
     search_fields = ('table_number',)
-    actions = ['approve_orders', 'mark_as_sold']
 
-    def approve_orders(self, request, queryset):
-        queryset.update(status='APPROVED')
+    def get_products(self, obj):
+        return ", ".join([p.name for p in obj.product.all()])
 
-    def mark_as_sold(self, request, queryset):
-        queryset.update(status='SOLD')
+    get_products.short_description = "Products"
+
 
 
 @admin.register(Product)

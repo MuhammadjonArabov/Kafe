@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Buyurtmalar</h2>
+
+    {% if orders %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Stol raqami</th>
+                    <th>Mahsulotlar</th>
+                    <th>Jami summa</th>
+                    <th>Status</th>
+                    <th>Amallar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.table_number }}</td>
+                    <td>
+                        <ul>
+                            {% for product in order.product.all %}
+                                <li>{{ product.name }} ({{ product.price }} so‘m)</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ order.total_amount }} so‘m</td>
+                    <td>
+                        <form method="POST" action="{% url 'update_order_status' order.id %}">
+                            {% csrf_token %}
+                            <select name="status" class="form-select" onchange="this.form.submit()">
+                                {% for status, label in order.STATUS_CHOICES %}
+                                    <option value="{{ status }}" {% if order.status == status %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST" action="{% url 'delete_order' order.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Haqiqatdan ham o‘chirmoqchimisiz?')">O‘chirish</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">Hozircha buyurtmalar yo‘q.</p>
+    {% endif %}
+</div>
+{% endblock content %}

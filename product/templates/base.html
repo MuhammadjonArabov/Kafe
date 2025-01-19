@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <style>
-
         .navbar-nav {
             gap: 150px;
         }
@@ -21,7 +20,6 @@
         .main-content {
             margin-top: 300px;
         }
-
 
         .navbar-brand {
             margin-left: 30px;
@@ -38,15 +36,17 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Kafe</a> <!-- O‘ng tomonga surildi -->
+            <a class="navbar-brand" href="#">Kafe</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav text-center">
+                    <!-- Ordering -->
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'order_products' %}">Ordering</a>
                     </li>
+                    <!-- Orders -->
                     <li class="nav-item">
                         <a class="nav-link" href="#">Orders</a>
                     </li>
@@ -60,8 +60,9 @@
 
     <!-- Main Content -->
     <div class="container main-content">
-        <h1 class="text-center products-title">START    ORDERING </h1>
-        <p class="text-center">Sweet treats are waiting for you</p>
+        {% block content %}
+        <!-- Content for each page will be injected here -->
+        {% endblock %}
     </div>
 
     <!-- Bootstrap JS -->

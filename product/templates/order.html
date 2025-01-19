@@ -1,65 +1,48 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="container mt-5">
-    <h1 class="text-center">Mahsulotlar</h1>
+    <h2 class="text-center">Ordering a product</h2>
 
-    <!-- Kategoriya Filtri -->
-    <div class="mb-4 text-center">
-        <select id="categoryFilter" class="form-select" aria-label="Kategoriyani tanlang">
-            <option value="">Barchasi</option>
+    <!-- Category filter -->
+    <form method="GET" class="mb-4">
+        <label for="category">Kategoriyalar:</label>
+        <select name="category" id="category" class="form-select" onchange="this.form.submit()">
+            <option value="">Hammasi</option>
             {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
+                <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
             {% endfor %}
         </select>
-    </div>
+    </form>
 
-    <!-- Mahsulotlarni Tanlash -->
+    <!-- Order create -->
     <form method="POST">
         {% csrf_token %}
+        <div class="mb-3">
+            <label for="table_number" class="form-label">Stol raqami</label>
+            <input type="text" id="table_number" name="table_number" class="form-control" required>
+        </div>
+
+        <!-- Order list -->
         <div class="row">
             {% for product in products %}
-                <div class="col-md-4 mb-4 product-item" data-category="{{ product.category.id }}">
-                    <div class="card">
-                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text">{{ product.price }} so'm</p>
-                            <label for="quantity_{{ product.id }}">Soni:</label>
-                            <input type="number" name="quantity_{{ product.id }}" min="0" value="0" class="form-control">
-                        </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">Narx: {{ product.price }} so‘m</p>
+                        <input type="checkbox" name="products" value="{{ product.id }}"> Tanlash
                     </div>
                 </div>
+            </div>
             {% endfor %}
         </div>
 
-        <!-- Stol raqamini kiritish -->
-        <div class="mb-3">
-            <label for="table_number">Stol raqami:</label>
-            <input type="text" name="table_number" required class="form-control">
-        </div>
-
-        <!-- Buyurtma tugmasi -->
-        <div class="text-center">
-            <button type="submit" class="btn btn-success">Buyurtma Berish</button>
-        </div>
+        <button type="submit" class="btn btn-primary w-100">Buyurtma berish</button>
     </form>
 </div>
-
-<!-- Javascript: Kategoriya bo‘yicha filter -->
-<script>
-    document.getElementById('categoryFilter').addEventListener('change', function() {
-        var selectedCategory = this.value;
-        var products = document.querySelectorAll('.product-item');
-
-        products.forEach(function(item) {
-            if (selectedCategory === '' || item.getAttribute('data-category') === selectedCategory) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    });
-</script>
-
 {% endblock content %}
