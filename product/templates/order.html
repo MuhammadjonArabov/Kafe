@@ -7,9 +7,9 @@
 
     <!-- Category filter -->
     <form method="GET" class="mb-4">
-        <label for="category">Kategoriyalar:</label>
+        <label for="category">Category:</label>
         <select name="category" id="category" class="form-select" onchange="this.form.submit()">
-            <option value="">Hammasi</option>
+            <option value="">Oll</option>
             {% for category in categories %}
                 <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
                     {{ category.name }}
@@ -22,7 +22,7 @@
     <form method="POST">
         {% csrf_token %}
         <div class="mb-3">
-            <label for="table_number" class="form-label">Stol raqami</label>
+            <label for="table_number" class="form-label">Table number</label>
             <input type="text" id="table_number" name="table_number" class="form-control" required>
         </div>
 
@@ -34,15 +34,15 @@
                     <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">Narx: {{ product.price }} so‘m</p>
-                        <input type="checkbox" name="products" value="{{ product.id }}"> Tanlash
+                        <p class="card-text">Narx: {{ product.price }} $</p>
+                        <input type="checkbox" name="products" value="{{ product.id }}"> Choose
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Buyurtma berish</button>
+        <button type="submit" class="btn btn-primary w-100">Summit</button>
     </form>
 </div>
 {% endblock content %}

@@ -5,31 +5,35 @@ from .models import Category, Product, Order
 
 def order_products(request):
     categories = Category.objects.all()
-    category_id = request.GET.get("category")
-    products = Product.objects.filter(category_id=category_id) if category_id else Product.objects.all()
+    products = Product.objects.all()
 
-    if request.method == "POST":
-        table_number = request.POST.get("table_number")
-        selected_products = request.POST.getlist("products")
+    category_id = request.GET.get('category', None)
+    if category_id:
+        products = products.filter(category_id=category_id)
 
-        if selected_products:
-            with transaction.atomic():
-                total_amount = sum(Product.objects.get(id=pid).price for pid in selected_products)
-                order = Order.objects.create(
-                    table_number=table_number,
-                    status="MODERATION",
-                    total_amount=total_amount
-                )
-                order.product.add(*selected_products)
+    if request.method == 'POST':
+        table_number = request.POST.get('table_number')
+        selected_products = request.POST.getlist('product_id')
+        total_amount = 0
 
-            return redirect("orders_list")
+        order = Order.objects.create(table_number=table_number, status='MODERATION')
 
-    return render(request, "order.html", {"categories": categories, "products": products})
+        for product_id in selected_products:
+            product = Product.objects.get(id=product_id)
+            total_amount += product.price
+            order.product.add(product)
+
+        order.total_amount = total_amount
+        order.save()
+
+        return redirect('orders_view')
+
+    return render(request, 'order.html', {'categories': categories, 'products': products})
 
 
 def orders_list(request):
-    orders = Order.objects.prefetch_related("product").all()
-    return render(request, "orders.html", {"orders": orders})
+    orders = Order.objects.exclude(status='SOLD')
+    return render(request, 'orders.html', {'orders': orders})
 
 
 def update_order_status(request, order_id):
