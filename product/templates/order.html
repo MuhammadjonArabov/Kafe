@@ -1,5 +1,59 @@
 {% extends "base.html" %}
-
 {% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Mahsulotlar</h1>
 
+    <!-- Kategoriya Filter -->
+    <div class="mb-4 text-center">
+        <select id="categoryFilter" class="form-select" aria-label="Kategoriyani tanlang">
+            <option value="">Barchasi</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Mahsulotlar ro‘yxati -->
+    <form id="orderForm" method="POST">
+        {% csrf_token %}
+        <div class="row" id="productContainer">
+            {% for product in products %}
+                <div class="col-md-4 mb-4 product-item" data-category="{{ product.category.id }}">
+                    <div class="card">
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.price }} so'm</p>
+                            <input type="number" name="quantity_{{ product.id }}" min="0" value="0" class="form-control">
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Stol raqami va Buyurtma tugmasi -->
+        <div class="text-center mt-4">
+            <label for="table_number">Stol raqami:</label>
+            <input type="text" name="table_number" required class="form-control w-25 mx-auto">
+            <button type="submit" class="btn btn-success mt-3">Buyurtma berish</button>
+        </div>
+    </form>
+</div>
+
+<!-- JavaScript: Kategoriya bo‘yicha mahsulotlarni filtr qilish -->
+<script>
+    document.getElementById('categoryFilter').addEventListener('change', function() {
+        var selectedCategory = this.value;
+        var products = document.querySelectorAll('.product-item');
+
+        products.forEach(function(item) {
+            if (selectedCategory === '' || item.getAttribute('data-category') === selectedCategory) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock content %}

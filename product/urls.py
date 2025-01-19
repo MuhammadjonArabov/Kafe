@@ -1,7 +1,6 @@
 from django.urls import path
-from .views import order_view
+from .views import order_products
 
-app_name='product'
 urlpatterns = [
-    path('signup', order_view, name='signup'),
+    path('order/', order_products, name='order_products'),
 ]

@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Order, Product, OrderItem
+from .models import Order, Product, OrderItem, Category
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'table_number', 'status', 'total_amount')
+    list_display = ('id', 'table_number', 'status',)
     list_filter = ('status',)
     search_fields = ('table_number',)
     actions = ['approve_orders', 'mark_as_sold']
@@ -19,6 +19,20 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'price', 'total_amount', 'image', 'category')
-    list_filter = ()
+    list_display = ('id', 'name', 'price', 'image', 'category')
+    list_filter = ('category',)
+    search_fields = ('name', 'category',)
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('id', 'order', 'product', 'quantity')
+    list_filter = ('product', 'order',)
+    search_fields = ('product', 'order',)
+
+@admin.register(Category)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
+
+
 
