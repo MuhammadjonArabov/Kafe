@@ -3,6 +3,7 @@ from product.models import Product, Order
 
 
 class OrderCreateSerializers(serializers.ModelSerializer):
+    """ Order create """
     product = serializers.ListField(
         child=serializers.IntegerField(), write_only=True
     )
@@ -50,6 +51,13 @@ class OrderCreateSerializers(serializers.ModelSerializer):
 
 
 class OrderUpdateSerializers(serializers.ModelSerializer):
+    """ Order status update"""
     class Meta:
         model = Order
         fields = ['status']
+
+
+class ProductListSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'price', 'image']
