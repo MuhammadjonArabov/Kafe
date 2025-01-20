@@ -35,6 +35,7 @@ class OrderCreateSerializers(serializers.ModelSerializer):
         return super().to_internal_value(data)
 
     def create(self, validated_data):
+        """ Create status and total_amount """
         product_ids = validated_data.pop('product')
         products = Product.objects.filter(id__in=product_ids)
         total_amount = sum(product.price for product in products)
