@@ -40,3 +40,4 @@ class Order(BaseModel):
 
     def __str__(self):
         return f"Table {self.table_number} - {self.status}"
+

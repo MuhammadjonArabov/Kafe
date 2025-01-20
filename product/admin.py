@@ -6,6 +6,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'table_number', 'status', 'get_products', 'total_amount')
     list_filter = ('status',)
     search_fields = ('table_number',)
+    readonly_fields = ('total_amount',)
 
     def get_products(self, obj):
         return ", ".join([p.name for p in obj.product.all()])
