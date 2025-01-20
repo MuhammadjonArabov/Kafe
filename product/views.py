@@ -1,31 +1,40 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Product, Order
 
-
 def order_products(request):
     categories = Category.objects.all()
     products = Product.objects.all()
 
-    category_id = request.GET.get('category', None)
+    # Agar kategoriya tanlangan bo‘lsa, mahsulotlarni filtrlaymiz
+    category_id = request.GET.get('category')
     if category_id:
         products = products.filter(category_id=category_id)
 
     if request.method == 'POST':
         table_number = request.POST.get('table_number')
-        selected_products = request.POST.getlist('product_id')
+        selected_products = request.POST.getlist('product_id')  # "product_id" nomi bilan olish
+
+        if not selected_products:  # Agar mahsulot tanlanmasa, xatolik bermaslik uchun tekshirish
+            return render(request, 'order.html', {
+                'categories': categories,
+                'products': products,
+                'error': "At least one product must be selected."
+            })
+
         total_amount = 0
 
-        order = Order.objects.create(table_number=table_number, status='MODERATION')
+        # Buyurtmani yaratish va `total_amount=0` berish
+        order = Order.objects.create(table_number=table_number, status='MODERATION', total_amount=0)
 
         for product_id in selected_products:
             product = Product.objects.get(id=product_id)
-            total_amount += product.price
-            order.product.add(product)
+            total_amount += product.price  # Jami narxni hisoblash
+            order.product.add(product)  # Mahsulotlarni buyurtmaga qo‘shish
 
-        order.total_amount = total_amount
+        order.total_amount = total_amount  # Umumiy narxni saqlash
         order.save()
 
-        return redirect('orders_view')
+        return redirect('orders_list')  # Sahifaga qaytarish
 
     return render(request, 'order.html', {'categories': categories, 'products': products})
 

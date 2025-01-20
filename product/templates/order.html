@@ -9,7 +9,7 @@
     <form method="GET" class="mb-4">
         <label for="category">Category:</label>
         <select name="category" id="category" class="form-select" onchange="this.form.submit()">
-            <option value="">Oll</option>
+            <option value="">All</option>
             {% for category in categories %}
                 <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
                     {{ category.name }}
@@ -18,7 +18,11 @@
         </select>
     </form>
 
-    <!-- Order create -->
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <!-- Product create -->
     <form method="POST">
         {% csrf_token %}
         <div class="mb-3">
@@ -26,7 +30,7 @@
             <input type="text" id="table_number" name="table_number" class="form-control" required>
         </div>
 
-        <!-- Order list -->
+        <!-- Product list -->
         <div class="row">
             {% for product in products %}
             <div class="col-md-4">
@@ -34,15 +38,15 @@
                     <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">Narx: {{ product.price }} $</p>
-                        <input type="checkbox" name="products" value="{{ product.id }}"> Choose
+                        <p class="card-text">Price: {{ product.price }} $</p>
+                        <input type="checkbox" name="product_id" value="{{ product.id }}"> Choose
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Summit</button>
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
     </form>
 </div>
 {% endblock content %}
