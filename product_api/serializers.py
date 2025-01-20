@@ -58,6 +58,13 @@ class OrderUpdateSerializers(serializers.ModelSerializer):
 
 
 class ProductListSerializers(serializers.ModelSerializer):
+    """ Product list """
     class Meta:
         model = Product
         fields = ['id', 'name', 'price', 'image']
+
+
+class OrderListSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['id', 'table_number', 'status', 'product', 'total_amount']

@@ -18,5 +18,13 @@ class ProductListAPIView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = serializers.ProductListSerializers
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filterset_fields = ['category']
-    search_fields = ['name', 'price']
+    filterset_fields = ['category__name']
+    search_fields = ['category__name', 'name']
+
+
+class OrderListAPIView(generics.ListAPIView):
+    queryset = Order.objects.exclude(status='SOLD')
+    serializer_class = serializers.OrderListSerializers
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_fields = ['status']
+    search_fields = ['table_number', 'status']
