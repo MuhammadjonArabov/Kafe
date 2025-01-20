@@ -8,6 +8,7 @@ First, clone the repository to your local machine by running the following comma
 
 ```bash
 git clone https://github.com/MuhammadjonArabov/Kafe.git
+```
 
 
 
