@@ -1,12 +1,11 @@
 from rest_framework import serializers
-from product.models import Order, Product
+from product.models import Product, Order
 
 
-class OderCreateSerializers(serializers.ModelSerializer):
+class OrderCreateSerializers(serializers.ModelSerializer):
     product = serializers.ListField(
         child=serializers.IntegerField(), write_only=True
     )
-
     table_number = serializers.CharField(required=False)
 
     class Meta:
@@ -14,7 +13,7 @@ class OderCreateSerializers(serializers.ModelSerializer):
         fields = ['table_number', 'product']
 
     def to_internal_value(self, data):
-        """  Custom validation for table_number and product. """
+        """Custom validation for table_number and product."""
         table_number = data.get('table_number', "").strip()
         product_ids = data.get('product', [])
 
@@ -36,10 +35,14 @@ class OderCreateSerializers(serializers.ModelSerializer):
         return super().to_internal_value(data)
 
     def create(self, validated_data):
-        products = validated_data.pop('product')
+        product_ids = validated_data.pop('product')
+        products = Product.objects.filter(id__in=product_ids)
         total_amount = sum(product.price for product in products)
+
         validated_data['status'] = 'MODERATION'
         validated_data['total_amount'] = total_amount
+
         order = super().create(validated_data)
         order.product.set(products)
+
         return order
