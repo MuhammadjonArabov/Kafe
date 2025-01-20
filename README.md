@@ -2,7 +2,6 @@
 
 Follow these steps to clone the project, set up a virtual environment, and install the required dependencies.
 
-## 1. Clone the Repository
 
 First, clone the repository to your local machine by running the following command:
 
