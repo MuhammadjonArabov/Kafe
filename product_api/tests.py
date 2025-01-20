@@ -58,7 +58,7 @@ def test_create_order_no_products(api_client):
 @pytest.mark.django_db
 def test_create_order_empty_table_number(api_client, create_products):
     """Test that validation error is raised if table_number is empty."""
-    url = reverse('order-create')  # Replace with actual URL name for the view
+    url = reverse('order-create')
     product_ids = [product.id for product in create_products]
     data = {
         'product': product_ids,

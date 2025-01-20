@@ -47,3 +47,9 @@ class OrderCreateSerializers(serializers.ModelSerializer):
         order.product.set(products)
 
         return order
+
+
+class OrderUpdateSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['status']
