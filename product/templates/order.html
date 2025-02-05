@@ -2,6 +2,89 @@
 {% load static %}
 
 {% block content %}
+
+<style>
+    /* Umumiy container uchun styling */
+    .container {
+        max-width: 800px;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Sarlavhani markazga joylashtirish */
+    h2 {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Select (category filter) */
+    .form-select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    /* Karta styling */
+    .col-md-4 {
+        display: flex;
+        justify-content: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 350px;
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Karta rasmi */
+    .card img {
+        height: 180px;
+        object-fit: cover;
+    }
+
+    /* Tugmalar styling */
+    .btn-primary {
+        background: #007bff;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: #0056b3;
+    }
+
+    /* Stol raqami input */
+    .form-control {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    /* Alertlar */
+    .alert {
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 5px;
+    }
+
+</style>
+
 <div class="container mt-5">
     <h2 class="text-center">Ordering a product</h2>
 
