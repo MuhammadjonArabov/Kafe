@@ -6,11 +6,11 @@ Follow these steps to clone the project, set up a virtual environment, and insta
 First, clone the repository to your local machine by running the following command:
 
 ```bash
-git clone https://github.com/MuhammadjonArabov/Weather.git
+git clone https://github.com/MuhammadjonArabov/Kafe.git
 ```
 Let's get into the project.
 ```bash
-cd Weather/
+cd Kafe/
 ```
 We'll open it in Visual Studio Code. If you prefer, open it in PyCharma.
 ```bash
@@ -35,6 +35,11 @@ Run
 ```bash
 python manage.py runserver
 ```
+Test implementation
+```bash
+pytest
+```
+
 After the project is launched, check the work by visiting the following URLs:
 ```bash
 http://127.0.0.1:8000/
