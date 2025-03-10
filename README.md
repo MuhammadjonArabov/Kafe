@@ -57,3 +57,5 @@ http://127.0.0.1:8000/admin/
 
 The structure of models in database design
 ![Alt text](https://github.com/MuhammadjonArabov/Kafe/blob/main/DrawDB-Stricture.png)
+
+![Alt text](https://github.com/MuhammadjonArabov/Kafe/blob/main/Screencast from 10-03-25 18:23:53.webm)
